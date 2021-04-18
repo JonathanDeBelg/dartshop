@@ -1,0 +1,14 @@
+{# Dartshop/src/Resources/views/storefront/layout/header/logo.html.twig #}
+
+{# extend the original twig file #}
+{% sw_extends '@Storefront/storefront/layout/header/logo.html.twig' %}
+
+{# override the original twig block #}
+{% block layout_header_logo_link %}
+
+    {#
+        call the `parent` function to keep the old behavior,
+        otherwise the block gets overridden
+    #}
+    {{ parent() }}
+{% endblock %}

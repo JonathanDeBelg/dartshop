@@ -1,0 +1,91 @@
+{% sw_extends '@Storefront/storefront/layout/footer/footer.html.twig' %}
+
+{% block layout_footer_inner_container %}
+    {% block layout_footer_navigation %}
+        <section class="footer-menus">
+            <div class="container">
+
+                <div id="footerColumns" class="row footer-columns" data-collapse-footer="true">
+                    <div class="col-md-3 col-sm-6 footer-column js-footer-column">
+                        <div id="collapseFooterHotline"
+                             class="footer-column-content collapse js-footer-column-content footer-contact"
+                             aria-labelledby="collapseFooterHotlineTitle">
+                            <div class="footer-column-content-inner">
+                                <div class="footer-contact-hotline">
+                                    {{ shopware['theme']['ds-footer-about-us-details']|raw }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 footer-column js-footer-column">
+                        <div id="collapseFooterHotline"
+                             class="footer-column-content collapse js-footer-column-content footer-contact"
+                             aria-labelledby="collapseFooterHotlineTitle">
+                            <div class="footer-column-content-inner">
+                                <div class="footer-contact-hotline">
+                                    {{ shopware['theme']['ds-footer-my-account-details']|raw }}
+                                </div>
+                                <div class="footer-contact-hotline">
+                                    {{ shopware['theme']['ds-footer-contact-details']|raw }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 footer-column js-footer-column">
+                        <div class="cms-block footer-newsletter">
+                            <div class="cms-element-form">
+                                <h3>Aanmelden nieuwsbrief</h3>
+                                <form action="{{ path('frontend.form.newsletter.register.handle') }}"
+                                      method="post"
+                                      data-form-csrf-handler="true"
+                                      data-form-validation="true">
+                                    {{ sw_csrf('frontend.form.newsletter.register.handle') }}
+                                    {% set formViolations = app.request.get('errors') %}
+                                    <input type="hidden" name="option" value="subscribe"/>
+                                    <input type="submit" class="submit--hidden d-none">
+                                    <div class="form-content">
+                                        <div class="form-group">
+                                            <input name="email"
+                                                   type="email"
+                                                   id="footerNewsletterMail"
+                                                   placeholder="{{ "account.personalMailPlaceholder"|trans }}{{ "general.required"|trans }}"
+                                                   required="required"
+                                                   value="{{ data.get('email') }}"
+                                                   class="form-control{% if formViolations.getViolations('/email') %} is-invalid{% endif %}"/>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-success">
+                                            {{ "newsletter.formSubmit"|trans }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 footer-column js-footer-column">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2454.487323320064!2d5.623592115469318!3d52.03443677972516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c652eb1f072785%3A0xa5a573e837ec01fa!2sKlumpenaar%20Bandenservice!5e0!3m2!1snl!2snl!4v1612206946808!5m2!1snl!2snl" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% block layout_footer_bottom %}
+            <div class="footer-bottom">
+                {% block layout_footer_service_menu %}
+                    <div class="container">
+                        {% block layout_footer_service_menu_content %}
+                            <div class="col-md-12 col-sm-12 footer-column js-footer-column row justify-content-center mt-40">
+                                <div class="col-md-6 col-sm-6 align-center footer-column js-footer-column">
+                                    <p text-align="center">Copyright © Klumpenaar | Gerealiseerd door <a href="https://dionant-solutions.nl">Dionant Solutions</a> | {{ shopware['theme']['bpw-footer-payment-info']|raw }} <img src="{{ asset('bundles//assets/img/iDEAL_24x24.png') }}" alt="iDeal"></p>
+                                </div>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{
+  "name": "swag/theme-skeleton",
+  "description": "Theme skeleton plugin",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Dartshop\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "Dartshop\\Dartshop",
+    "label": {
+      "de-DE": "Theme Dartshop plugin",
+      "en-GB": "Theme Dartshop plugin"
+    }
+  }
+}

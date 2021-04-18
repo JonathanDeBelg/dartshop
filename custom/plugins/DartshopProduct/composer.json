@@ -1,0 +1,18 @@
+{
+    "name": "dartshop-klumpenaar/product-importer",
+    "description": "Product importer",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "DartshopProduct\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "DartshopProduct\\DartshopProduct",
+            "label": {
+                  "de-DE": "Product importer",
+                  "en-GB": "Product importer"
+            }
+    }
+}

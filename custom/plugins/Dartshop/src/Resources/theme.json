@@ -1,0 +1,70 @@
+{
+    "name": "Dartshop",
+    "author": "Dionant Solutions",
+    "views": [
+        "@Storefront",
+        "@Plugins",
+        "@Dartshop"
+    ],
+    "style": [
+        "app/storefront/src/scss/overrides.scss",
+        "@Storefront",
+        "app/storefront/src/scss/base.scss",
+        "app/storefront/src/scss/home.scss"
+    ],
+    "script": [
+        "@Storefront",
+        "app/storefront/dist/storefront/js/dartshop.js"
+    ],
+    "asset": [
+        "@Storefront",
+        "app/storefront/src/assets"
+    ],
+    "config": {
+        "blocks": {
+            "footerBlock": {
+                "label": {
+                    "en-GB": "Footer"
+                }
+            }
+        },
+        "fields": {
+            "ds-footer-contact-details": {
+                "label": {
+                    "en-GB": "Footer contact gegevens"
+                },
+                "type": "text",
+                "scss": false,
+                "custom": {
+                    "componentName": "sw-text-editor"
+                },
+                "block": "footerBlock",
+                "section": "Contact"
+            },
+            "ds-footer-about-us-details": {
+                "label": {
+                    "en-GB": "Footer over ons gegevens"
+                },
+                "type": "text",
+                "scss": false,
+                "custom": {
+                    "componentName": "sw-text-editor"
+                },
+                "block": "footerBlock",
+                "section": "Over ons"
+            },
+            "ds-footer-my-account-details": {
+                "label": {
+                    "en-GB": "Footer mijn account gegevens"
+                },
+                "type": "text",
+                "scss": false,
+                "custom": {
+                    "componentName": "sw-text-editor"
+                },
+                "block": "footerBlock",
+                "section": "Mijn acount"
+            }
+        }
+    }
+}
