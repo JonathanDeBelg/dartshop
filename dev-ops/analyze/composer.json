@@ -1,0 +1,29 @@
+{
+    "name": "shopware/analyze-tools",
+    "description": "A set of tools",
+    "type": "metapackage",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "1.4.0"
+    },
+    "scripts": {
+        "post-install-cmd": ["@composer bin all install --ansi"],
+        "post-update-cmd": ["@composer bin all update --ansi"]
+    },
+    "autoload": {
+        "psr-4": {
+            "Shopware\\Development\\Analyze\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Shopware\\Development\\Analyze\\Test\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.2.9"
+        }
+    }
+}

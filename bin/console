@@ -1,0 +1,63 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+use PackageVersions\Versions;
+use Shopware\Core\Framework\Plugin\KernelPluginLoader\DbalKernelPluginLoader;
+use Shopware\Core\Framework\Plugin\KernelPluginLoader\StaticKernelPluginLoader;
+use Shopware\Development\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\Dotenv\Dotenv;
+
+if (PHP_VERSION_ID < 70200) {
+    echo 'Your cli is running PHP version ' . PHP_VERSION . ' but Shopware 6 requires at least PHP 7.2.0' . PHP_EOL;
+    exit();
+}
+
+set_time_limit(0);
+
+$classLoader = require __DIR__ . '/../vendor/autoload.php';
+
+if (!class_exists(Application::class)) {
+    throw new RuntimeException('You need to add "symfony/framework-bundle" as a Composer dependency.');
+}
+
+if (!class_exists(Dotenv::class)) {
+    throw new RuntimeException('APP_ENV environment variable is not defined. You need to define environment variables for configuration or add "symfony/dotenv" as a Composer dependency to load variables from a .env file.');
+}
+
+(new Dotenv(true))->load(__DIR__ . '/../.env');
+
+$input = new ArgvInput();
+$env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'dev', true);
+$debug = (bool) ($_SERVER['APP_DEBUG'] ?? ($env !== 'prod')) && !$input->hasParameterOption('--no-debug', true);
+$withoutPlugins = (bool) ($_SERVER['APP_NO_PLUGINS'] ?? false);
+
+if ($debug) {
+    umask(0000);
+
+    if (class_exists(Debug::class)) {
+        Debug::enable();
+    }
+}
+
+if (class_exists('Shopware\Core\HttpKernel')) {
+    $kernel = new \Shopware\Development\HttpKernel($env, $debug, $classLoader);
+    $application = new Application($kernel->getKernel());
+    $application->run($input);
+
+    return;
+}
+
+$shopwareVersion = Versions::getVersion('shopware/platform');
+
+$connection = Kernel::getConnection();
+
+$cacheId = (new CacheIdLoader($connection))
+    ->load();
+
+$pluginLoader = $withoutPlugins ? new StaticKernelPluginLoader($classLoader) : new DbalKernelPluginLoader($classLoader, null, $connection);
+$kernel = new Kernel($env, $debug, $pluginLoader, $cacheId, $shopwareVersion, $connection);
+$application = new Application($kernel);
+$application->run($input);
