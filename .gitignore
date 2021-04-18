@@ -44,7 +44,6 @@
 
 /selenium-debug.log
 chromedriver.log
-/platform/
 
 ###> symfony/framework-bundle ###
 .env
